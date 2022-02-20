@@ -1,0 +1,3 @@
+CREATE TABLE Users (
+    username VARCHAR(256) PRIMARY KEY
+);
