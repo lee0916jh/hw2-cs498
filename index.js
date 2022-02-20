@@ -55,7 +55,7 @@ app.get('/list', (req, res) => {
         }
     )
     
-    res.send(query_res)
+    res.json(query_res)
 })
 
 PORT = 80
