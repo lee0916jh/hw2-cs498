@@ -53,10 +53,11 @@ app.get('/list', (req, res) => {
             }
         }
     )
-
+    
+    res.send(results)
 })
 
-PORT = 8080
+PORT = 80
 app.listen(PORT, () =>
     console.log('Listening ' + PORT)
 )
