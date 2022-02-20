@@ -41,13 +41,14 @@ app.post('/register/:username', (req, res) => {
 
 app.get('/list', (req, res) => {
     let query = 'SELECT * FROM Users'
-
+    let query_res = null;
     db.query(
         query,
         (err, results, fields) => {
             if (err)
                 console.log(err)
             else {
+                query_res = results
                 console.log(results)
                 console.log(fields)
             }
