@@ -71,6 +71,12 @@ app.get('/list', (req, res) => {
     )
 })
 
+app.post('/clear', (req, res) => {
+    const query = 'DELETE FROM Users'
+    db.execute(query)
+    res.send(200)
+})
+
 PORT = 80
 app.listen(PORT, () =>
     console.log('Listening ' + PORT)
