@@ -26,24 +26,30 @@ app.get('/greeting', (req, res) => {
 
 app.post('/register', (req, res) => {
     const { username } = req.body
-    let query = 'INSERT INTO Users VALUES (?)'
+    try {
+        let query = 'INSERT INTO Users VALUES (?)'
 
-    db.query(
-        query,
-        [username],
-        (err, results) => {
-            if (err)
-                console.log(err)
-            else
-                console.log(results)
-        }
-    )
+        db.query(
+            query,
+            [username],
+            (err, results) => {
+                if (err)
+                    console.log(err)
+                else
+                    console.log(results)
+            }
+        )
 
-    axios.post("http://" + otherHost + '/register', {
-        username
-    })
+        axios.post("http://" + otherHost + '/register', {
+            username,
+            isSecondaryRequest: true
+        }).catch()
+    } catch (e) {
+        console.log(e)
+    } finally {
+        res.send(200)
+    }
 
-    res.send(username)
 })
 
 app.get('/list', (req, res) => {
