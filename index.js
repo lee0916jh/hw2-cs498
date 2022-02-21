@@ -62,12 +62,10 @@ app.get('/list', (req, res) => {
             else {
                 console.log(results)
                 console.log(fields)
-                res.json(fields)
+                res.json(results)
             }
         }
     )
-
-    res.json(result)
 })
 
 PORT = 80
