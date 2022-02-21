@@ -48,7 +48,7 @@ app.post('/register', (req, res) => {
     } catch (e) {
         console.log(e)
     } finally {
-        res.send(200)
+        res.sendStatus(200)
     }
 
 })
@@ -74,7 +74,14 @@ app.get('/list', (req, res) => {
 app.post('/clear', (req, res) => {
     const query = 'DELETE FROM Users'
     db.execute(query)
-    res.send(200)
+    axios.post('http://' + otherHost + "/clear-no-pushing")
+    res.sendStatus(200)
+})
+
+app.post('/clear-no-pushing', (req, res) => {
+    const query = 'DELETE FROM Users'
+    db.execute(query)
+    res.sendStatus(200)
 })
 
 PORT = 80
