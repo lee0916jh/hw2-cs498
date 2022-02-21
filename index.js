@@ -25,7 +25,7 @@ app.get('/greeting', (req, res) => {
 })
 
 app.post('/register', (req, res) => {
-    const { username } = req.body
+    const { username, isSecondaryRequest } = req.body
     try {
         let query = 'INSERT INTO Users VALUES (?)'
 
@@ -39,11 +39,12 @@ app.post('/register', (req, res) => {
                     console.log(results)
             }
         )
-
-        axios.post("http://" + otherHost + '/register', {
-            username,
-            isSecondaryRequest: true
-        }).catch()
+        if (!isSecondaryRequest) {
+            axios.post("http://" + otherHost + '/register', {
+                username,
+                isSecondaryRequest: true
+            }).catch()
+        }
     } catch (e) {
         console.log(e)
     } finally {
