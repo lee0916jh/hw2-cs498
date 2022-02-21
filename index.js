@@ -2,6 +2,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const mysql = require('mysql2')
 
+const {otherHost} = require("./host")
+
 const app = express()
 
 app.use(bodyParser.json())
@@ -21,9 +23,9 @@ app.get('/greeting', (req, res) => {
     res.send('Hello World!')
 })
 
-app.post('/register/:username', (req, res) => {
-    let username = req.params.username
-    let query = 'INSERT INTO Users WHERE username = ?'
+app.post('/register', (req, res) => {
+    const { username } = req.body
+    let query = 'INSERT INTO Users VALUES (?)'
 
     db.query(
         query,
@@ -36,26 +38,36 @@ app.post('/register/:username', (req, res) => {
         }
     )
 
-    res.send(200)
+    fetch("http://" + otherHost + '/register', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({
+            username: username
+        })
+    })
+
+    res.send(username)
 })
 
 app.get('/list', (req, res) => {
     let query = 'SELECT * FROM Users'
-    let query_res = null;
-    db.query(
+
+    const result = db.query(
         query,
         (err, results, fields) => {
             if (err)
                 console.log(err)
             else {
-                query_res = results
                 console.log(results)
                 console.log(fields)
+                res.json(results)
             }
         }
     )
-    
-    res.json(query_res)
+
+    res.json(result)
 })
 
 PORT = 80
