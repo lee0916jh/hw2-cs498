@@ -1,8 +1,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const mysql = require('mysql2')
+const axios = require('axios')
 
-const {otherHost} = require("./host")
+const { otherHost } = require("./host")
 
 const app = express()
 
@@ -38,14 +39,8 @@ app.post('/register', (req, res) => {
         }
     )
 
-    fetch("http://" + otherHost + '/register', {
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        method: "POST",
-        body: JSON.stringify({
-            username: username
-        })
+    axios.post("http://" + otherHost + '/register', {
+        username
     })
 
     res.send(username)
