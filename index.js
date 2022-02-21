@@ -64,6 +64,7 @@ app.get('/list', (req, res) => {
             else {
                 console.log(results)
                 console.log(fields)
+                const list = results.map(elem => elem.username)
                 res.json(results)
             }
         }
