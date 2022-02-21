@@ -12,7 +12,7 @@ const db = mysql.createPool({
     host: 'localhost',
     user: 'admin',
     password: 'password',
-    database: 'hw2',
+    database: 'prod',
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
